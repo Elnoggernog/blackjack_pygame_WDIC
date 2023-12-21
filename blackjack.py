@@ -32,13 +32,17 @@ def imageLoad(name, card):
     uses the os.path.join function to get he full filename. It then tries to load the image,
     and raises an exception if it can't, so the user will know specifically what's going if the image loading
     does not work. """
-    
+
     if card == 1:
         fullname = os.path.join("images/cards/", name)
     else: fullname = os.path.join('images', name)
     
     try:
-        image = pygame.image.load(fullname)
+        if name == "bjs.png":
+            image = pygame.transform.scale(pygame.image.load(fullname), (800,500))
+        else:
+            image = pygame.image.load(fullname)
+            
     except (pygame.error, message):
         print ('Cannot load image:', name)
         raise (SystemExit, message)
@@ -661,7 +665,7 @@ def mainGame():
         buttons.draw(screen)
          
         # If there are cards on the screen, draw them    
-        if len(cards) is not 0:
+        if len(cards) != 0:
             playerCards.update()
             playerCards.draw(screen)
             cards.update()
