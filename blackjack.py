@@ -253,7 +253,7 @@ def mainGame():
         # Remove old dealer's cards
         cards.empty()
         
-        dCardPos = (50, 70)
+        dCardPos = (440-40*len(dealerHand), 70)
                    
         for x in dealerHand:
             card = cardSprite(x, dCardPos)
@@ -279,7 +279,7 @@ def mainGame():
         
         roundEnd = 1
 
-        return deck, playerHand, dealerHand, deadDeck, funds, roundEnd 
+        return deck, playerHand, dealerHand, deadDeck, funds, roundEnd
         
     def compareHands(deck, deadDeck, playerHand, dealerHand, funds, bet, cards, cardSprite):
         """ Called at the end of a round (after the player stands), or at the beginning of a round

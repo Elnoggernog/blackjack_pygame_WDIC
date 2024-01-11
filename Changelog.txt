@@ -1,3 +1,4 @@
 21.12.2023: Added original Files to create Repository (4607263)
 21.12.2023: changed Background and Scaled it (4001705)
-11.01.2024: Player Cards are now being stacked towards top right corner (...)
+11.01.2024: Player Cards are now being stacked towards top right corner (a60106c)
+11.01.2024: Dealer Cards are now being layed down in the middle. They are also being centered (...)
