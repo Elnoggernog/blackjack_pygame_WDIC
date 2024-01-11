@@ -361,10 +361,10 @@ def mainGame():
                     deck, deadDeck, playerHand = hit(deck, deadDeck, playerHand)
 
                     currentCard = len(playerHand) - 1
+                    if len(playerCards) > 2:
+                        pCardPos = (pCardPos[0] + 25, pCardPos[1] - 25)
                     card = cardSprite(playerHand[currentCard], pCardPos)
                     cards.add(card)
-                    pCardPos = (pCardPos[0] - 80, pCardPos[1])
-                
                     click = 0
                 
             return deck, deadDeck, playerHand, pCardPos, click
@@ -464,13 +464,13 @@ def mainGame():
                     
                     deck, deadDeck, playerHand, dealerHand = deckDeal(deck, deadDeck)
 
-                    dCardPos = (50, 70)
-                    pCardPos = (540,370)
+                    dCardPos = (425-len(dealerHand)*30, 70)
+                    pCardPos = (450-len(playerHand)*30, 350)
 
                     # Create player's card sprites
                     for x in playerHand:
                         card = cardSprite(x, pCardPos)
-                        pCardPos = (pCardPos[0] - 80, pCardPos [1])
+                        pCardPos = (pCardPos[0] + 25, pCardPos [1] - 25)
                         playerCards.add(card)
                     
                     # Create dealer's card sprites  
