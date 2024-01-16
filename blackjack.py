@@ -323,6 +323,9 @@ def mainGame():
             displayFont = display(textFont, "Dealer wins! You lost $%.2f." %(bet))
             
         return deck, deadDeck, roundEnd, funds, displayFont
+        
+    def get_PlayerVal():
+        return checkValue(playerHand)
     ######## DECK FUNCTIONS END ########  
     
     ######## SPRITE FUNCTIONS BEGIN ##########
@@ -584,6 +587,7 @@ def mainGame():
     # The default funds start at $100.00, and the initial bet defaults to $10.00
     funds = 100.00
     bet = 10.00
+    playerHandValue = 0
 
     # This is a counter that counts the number of rounds played in a given session
     handsPlayed = 0
@@ -670,6 +674,17 @@ def mainGame():
             playerCards.draw(screen)
             cards.update()
             cards.draw(screen)
+        
+        if not roundEnd:
+            playerHandValue = get_PlayerVal()
+        if playerHandValue == 0:
+            playerHandValue = '-'
+        font = pygame.font.Font(None, 32)
+        text = font.render(str(playerHandValue), True, (255,255,255))
+        textpos = text.get_rect(centerx=screen.get_width() / 2, y=screen.get_height() - 70)
+        
+        screen.blit(text, textpos)
+
 
         # Updates the contents of the display
         pygame.display.flip()
