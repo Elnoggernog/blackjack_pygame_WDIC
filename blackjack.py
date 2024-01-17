@@ -26,6 +26,8 @@ pygame.mixer.init()
 screen = pygame.display.set_mode((800, 480))
 clock = pygame.time.Clock()
 
+lastDealerHandValue = 0
+
 ###### SYSTEM FUNCTIONS BEGIN #######
 def imageLoad(name, card):
     """ Function for loading an image. Makes sure the game is compatible across multiple OS'es, as it
@@ -250,9 +252,13 @@ def mainGame():
             # If the player has blackjack, pay his bet back 3:2
             moneyGained += (moneyGained/2.0)
             
+        global lastDealerHandValue
+        lastDealerHandValue = checkValue(dealerHand)
+            
         # Remove old dealer's cards
         cards.empty()
         
+
         dCardPos = (440-40*len(dealerHand), 70)
                    
         for x in dealerHand:
@@ -326,6 +332,14 @@ def mainGame():
         
     def get_PlayerVal():
         return checkValue(playerHand)
+    def get_DealerVal():
+        if len(dealerHand)<=1:
+            return 0
+        if len(dealerHand)==2:
+            return checkValue({dealerHand[0]})
+        return checkValue(dealerHand)
+    def get_LastDealerVal():
+        return lastDealerHandValue
     ######## DECK FUNCTIONS END ########  
     
     ######## SPRITE FUNCTIONS BEGIN ##########
@@ -588,6 +602,9 @@ def mainGame():
     funds = 100.00
     bet = 10.00
     playerHandValue = 0
+    dealerHandValue = 0
+    lastPlayerHandValue = 0
+    global lastDealerHandValue
 
     # This is a counter that counts the number of rounds played in a given session
     handsPlayed = 0
@@ -675,14 +692,22 @@ def mainGame():
             cards.update()
             cards.draw(screen)
         
-        if not roundEnd:
-            playerHandValue = get_PlayerVal()
-        if playerHandValue == 0:
-            playerHandValue = '-'
+
+        if roundEnd:
+            dealerHandValue = lastDealerHandValue
+        else:
+            if get_PlayerVal() > 21:
+                playerHandValue = 'Too many'
+            else:
+                playerHandValue = get_PlayerVal()
+            dealerHandValue = get_DealerVal()
+
         font = pygame.font.Font(None, 32)
         text = font.render(str(playerHandValue), True, (255,255,255))
         textpos = text.get_rect(centerx=screen.get_width() / 2, y=screen.get_height() - 70)
-        
+        screen.blit(text, textpos)
+        text = font.render(str(dealerHandValue), True, (255,255,255))
+        textpos = text.get_rect(centerx=screen.get_width() / 2, y=140)
         screen.blit(text, textpos)
 
 
